@@ -57,9 +57,10 @@ export function ResearchForm() {
             createdAt: new Date().toISOString(),
             result: payload.result,
           };
+          sessionStorage.setItem(`oauth_research_${payload.shareId}`, JSON.stringify(toStore));
           localStorage.setItem(`oauth_research_${payload.shareId}`, JSON.stringify(toStore));
         } catch (err) {
-          console.warn("Could not save to localStorage:", err);
+          console.warn("Could not save to storage:", err);
         }
       }
       setState({ kind: "result", input: value, result: payload.result, shareId: payload.shareId });
@@ -112,7 +113,11 @@ export function ResearchForm() {
               <div className="result-sources"><b>Official sources read</b>{state.result.sources.map((source) => <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>{source.title} ↗</a>)}</div>
               {state.shareId && (
                 <div style={{ marginTop: "16px", marginBottom: "14px" }}>
-                  <Link className="button primary" href={`/research/${state.shareId}`} style={{ display: "block", textAlign: "center", padding: "14px 20px", textDecoration: "none", fontSize: "14px", fontWeight: "700" }}>
+                  <Link
+                    className="button primary"
+                    href={`/research/${state.shareId}?data=${encodeURIComponent(JSON.stringify(state.result))}`}
+                    style={{ display: "block", textAlign: "center", padding: "14px 20px", textDecoration: "none", fontSize: "14px", fontWeight: "700" }}
+                  >
                     Open complete end-to-end guide →
                   </Link>
                 </div>

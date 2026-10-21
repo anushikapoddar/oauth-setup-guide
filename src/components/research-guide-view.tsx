@@ -25,15 +25,21 @@ export function ResearchGuideView({
     const dataParam = searchParams.get("data");
     if (dataParam) {
       try {
-        const parsed = JSON.parse(decodeURIComponent(dataParam));
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(dataParam);
+        } catch {
+          parsed = JSON.parse(decodeURIComponent(dataParam));
+        }
         const item: SavedResearch = {
           id,
-          input: parsed.provider?.name || id,
+          input: (parsed as { provider?: { name?: string } }).provider?.name || id,
           createdAt: new Date().toISOString(),
-          result: parsed,
+          result: parsed as SavedResearch["result"],
         };
         setSaved(item);
         try {
+          sessionStorage.setItem(`oauth_research_${id}`, JSON.stringify(item));
           localStorage.setItem(`oauth_research_${id}`, JSON.stringify(item));
         } catch {}
         setLoading(false);
@@ -43,9 +49,9 @@ export function ResearchGuideView({
       }
     }
 
-    // 2. Check browser localStorage
+    // 2. Check browser sessionStorage and localStorage
     try {
-      const stored = localStorage.getItem(`oauth_research_${id}`);
+      const stored = sessionStorage.getItem(`oauth_research_${id}`) || localStorage.getItem(`oauth_research_${id}`);
       if (stored) {
         const item = JSON.parse(stored) as SavedResearch;
         setSaved(item);
@@ -53,7 +59,7 @@ export function ResearchGuideView({
         return;
       }
     } catch (err) {
-      console.warn("Could not read from localStorage:", err);
+      console.warn("Could not read from storage:", err);
     }
 
     setNotFound(true);
