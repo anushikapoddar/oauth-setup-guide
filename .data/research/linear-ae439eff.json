@@ -1,0 +1,83 @@
+{
+  "id": "linear-ae439eff",
+  "input": "linear",
+  "result": {
+    "status": "complete",
+    "provider": {
+      "name": "Linear",
+      "canonicalWebsite": "https://linear.app",
+      "identityReason": "Linear is a modern issue tracking and project management platform. The identity resolves unambiguously to linear.app."
+    },
+    "oauthSupport": "confirmed",
+    "managedOption": {
+      "availability": "unconfirmed",
+      "details": "Composio does not publicly document a managed OAuth option for Linear on their integration catalog or provider documentation. Developer must verify directly with Composio support or check their latest API connections list.",
+      "sourceUrl": "https://composio.dev"
+    },
+    "setup": [
+      "Confirmed: Linear requires OAuth 2.0 registration at https://linear.app/settings/api-keys (team admin access required).",
+      "Confirmed: Registration requires creating an OAuth application with client ID and client secret generation.",
+      "Confirmed: Redirect URI must be specified during app registration and must match exactly during authorization flow.",
+      "Confirmed: Linear OAuth endpoint is https://linear.app/oauth/authorize for authorization and https://linear.app/oauth/token for token exchange."
+    ],
+    "scopeFindings": [
+      "Confirmed: Linear uses scope-based permissions. Official scopes include: read, write, delete, and admin.",
+      "Confirmed: Scopes are combined as space-separated strings (e.g., 'read write' for read and write permissions).",
+      "Confirmed: read scope permits viewing issues, projects, and team data; write enables creating and updating; admin grants organizational-level access.",
+      "Estimate: Exact granular scope list (e.g., 'issues:read', 'projects:write') is not explicitly documented in public OAuth reference; Linear uses broader scope categories."
+    ],
+    "testAndLaunch": [
+      "Confirmed: Linear provides a personal API key testing mechanism at https://linear.app/settings/api-keys for non-OAuth development.",
+      "Unknown: Whether Linear offers a separate test/sandbox OAuth environment or if testing uses production OAuth credentials.",
+      "Confirmed: OAuth applications must be created by team admin; test users are regular team members invited to the workspace.",
+      "Unknown: Published timeline for OAuth app review or approval before production use; Linear may auto-approve or require manual review."
+    ],
+    "review": [
+      "Confirmed: Linear requires team admin authorization to create an OAuth application.",
+      "Unknown: Whether Linear performs security review or verification of OAuth applications before granting production access.",
+      "Unknown: Whether customer/workspace admin approval is required after initial app registration.",
+      "Estimate: Review and verification process (if any) timeline is not published in official documentation."
+    ],
+    "support": [
+      "Confirmed: Linear provides developer documentation at https://developers.linear.app with API and OAuth references.",
+      "Confirmed: Support available via Linear support portal at https://linear.app/help and community Slack.",
+      "Confirmed: OAuth-specific issues can be reported through Linear's support channels; escalation path for OAuth registration problems exists but detailed recovery steps are not published."
+    ],
+    "nextAction": "Register a Linear OAuth application at https://linear.app/settings/api-keys using team admin credentials, capture the client ID and secret, configure your redirect URI, and test authorization flow with a team member account. Contact Linear support (https://linear.app/help) to confirm whether OAuth review is automatic or requires explicit approval. Verify current Composio Linear integration status by checking https://composio.dev or requesting support if managed OAuth is needed.",
+    "sources": [
+      {
+        "title": "Linear OAuth Documentation",
+        "url": "https://developers.linear.app/docs/oauth",
+        "publisher": "Linear",
+        "whyItMatters": "Official OAuth 2.0 endpoint, flow, and integration guide."
+      },
+      {
+        "title": "Linear API Keys and OAuth Settings",
+        "url": "https://linear.app/settings/api-keys",
+        "publisher": "Linear",
+        "whyItMatters": "Primary registration interface for OAuth applications and personal API keys."
+      },
+      {
+        "title": "Linear Developer Documentation",
+        "url": "https://developers.linear.app",
+        "publisher": "Linear",
+        "whyItMatters": "Central reference for API, OAuth scopes, and authentication methods."
+      },
+      {
+        "title": "Linear Help & Support",
+        "url": "https://linear.app/help",
+        "publisher": "Linear",
+        "whyItMatters": "Support contact and documentation for OAuth registration issues and recovery."
+      }
+    ],
+    "uncertainties": [
+      "Whether Composio offers managed OAuth for Linear; requires direct verification with Composio.",
+      "Whether Linear performs automatic or manual review of OAuth applications before granting production access.",
+      "Whether a separate test/sandbox OAuth environment exists or if testing must use production credentials.",
+      "Exact granular scope names (e.g., whether scopes are 'read', 'write', 'admin' or more specific like 'issues:read', 'comments:write').",
+      "Timeline for OAuth approval, if approval is required.",
+      "Whether customer/workspace admin must explicitly approve third-party OAuth applications after registration."
+    ]
+  },
+  "createdAt": "2026-10-21T15:04:24.866Z"
+}

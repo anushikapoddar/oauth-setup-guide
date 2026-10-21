@@ -1,0 +1,89 @@
+{
+  "id": "discord-07e6589c",
+  "input": "discord",
+  "result": {
+    "status": "complete",
+    "provider": {
+      "name": "Discord",
+      "canonicalWebsite": "https://discord.com",
+      "identityReason": "Discord is a widely-used communication platform with official OAuth2 support for third-party application integrations. Identity confirmed by canonical domain and official developer documentation."
+    },
+    "oauthSupport": "confirmed",
+    "managedOption": {
+      "availability": "unconfirmed",
+      "details": "Composio integration status for Discord OAuth not confirmed in this research. Verify via Composio documentation or support.",
+      "sourceUrl": "https://composio.dev/integrations"
+    },
+    "setup": [
+      "Confirmed: Register application at https://discord.com/developers/applications.",
+      "Confirmed: Click 'New Application' and provide application name.",
+      "Confirmed: Navigate to 'OAuth2' → 'General' tab to obtain Client ID and Client Secret.",
+      "Confirmed: Set redirect URI(s) under 'OAuth2' → 'Redirects' (e.g., http://localhost:3000/callback for testing, https://yourdomain.com/callback for production).",
+      "Confirmed: Discord requires HTTPS redirect URIs in production; HTTP allowed for localhost testing only.",
+      "Confirmed: No formal registration approval step required; application is usable immediately upon creation."
+    ],
+    "scopeFindings": [
+      "Confirmed: Discord offers scopes including 'identify' (read user ID and username), 'email' (read user email), 'guilds' (read user's guilds), 'guilds.join' (join user to guilds), 'bot' (add bot to server), and 'applications.commands' (register slash commands).",
+      "Confirmed: Scopes are requested during OAuth authorization flow and user must grant permission.",
+      "Confirmed: 'identify' and 'email' are common for multi-user agent integrations to identify and authenticate users.",
+      "Confirmed: 'guilds' and 'applications.commands' are typical for agents that manage Discord servers or respond to commands."
+    ],
+    "testAndLaunch": [
+      "Confirmed: Discord Developer Portal allows testing with any Discord server where developer has permissions.",
+      "Confirmed: Test mode uses same OAuth2 credentials as production; no separate test environment required.",
+      "Confirmed: Developer can authorize the application from a test Discord server to validate OAuth flow and scopes.",
+      "Confirmed: No public verification or marketplace review required for basic OAuth application; application is accessible to any user with authorization link.",
+      "Confirmed: Custom bots requiring public distribution to third-party servers may face Discord's published server/bot partnership policies but not formal OAuth review."
+    ],
+    "review": [
+      "Confirmed: No mandatory pre-publication OAuth review or verification by Discord for private/internal use.",
+      "Confirmed: Public bots distributed on bot lists or widely shared may be subject to community standards and Discord's Terms of Service.",
+      "Confirmed: Applications requesting sensitive scopes (e.g., 'email') do not trigger additional review if used privately.",
+      "Estimate: Discord may flag or restrict bots showing patterns of unauthorized access or Terms violations, but no formal review queue exists for standard OAuth applications."
+    ],
+    "support": [
+      "Confirmed: Official Discord Developer Documentation at https://discord.com/developers/docs provides OAuth2 reference, scope definitions, and integration guides.",
+      "Confirmed: Discord Developer Support available via https://discord.gg/discord-developers (community server) and support tickets for registered applications.",
+      "Confirmed: GitHub repositories and third-party libraries (discord.py, discord.js) provide community-maintained examples and troubleshooting.",
+      "Confirmed: Discord status page at https://status.discord.com reports platform incidents."
+    ],
+    "nextAction": "Register a test application at https://discord.com/developers/applications, configure redirect URI(s) matching your deployment environment (localhost:3000 for testing), request 'identify' and 'email' scopes, and initiate an OAuth authorization flow to confirm integration. Then verify Composio's managed OAuth option via https://composio.dev/docs or support for streamlined credential handling.",
+    "sources": [
+      {
+        "title": "Discord Developer Portal – Applications",
+        "url": "https://discord.com/developers/applications",
+        "publisher": "Discord Inc.",
+        "whyItMatters": "Official source for OAuth2 application registration, Client ID/Secret generation, and redirect URI configuration."
+      },
+      {
+        "title": "Discord Developer Documentation – OAuth2",
+        "url": "https://discord.com/developers/docs/topics/oauth2",
+        "publisher": "Discord Inc.",
+        "whyItMatters": "Authoritative reference for OAuth2 flow, scopes, authorization endpoints, and token exchange."
+      },
+      {
+        "title": "Discord Developer Documentation – Scopes",
+        "url": "https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes",
+        "publisher": "Discord Inc.",
+        "whyItMatters": "Defines all available OAuth scopes and their permissions for multi-user agent use cases."
+      },
+      {
+        "title": "Discord Terms of Service",
+        "url": "https://discord.com/terms",
+        "publisher": "Discord Inc.",
+        "whyItMatters": "Clarifies acceptable use and compliance requirements for OAuth applications."
+      }
+    ],
+    "uncertainties": [
+      "Composio's managed OAuth support for Discord (scope coverage, credential storage, refresh token handling) is unconfirmed and requires direct verification.",
+      "Whether Discord enforces additional restrictions on multi-user AI agent integrations is not documented in official OAuth policy; contact Discord Developer Support to confirm.",
+      "Rate limits and usage quotas for OAuth-authenticated bots are not published in authorization documentation; verify via Discord API reference or support."
+    ],
+    "difficulty": "low",
+    "difficultyReason": "Discord OAuth2 is straightforward to implement. No formal approval, review, or test environment setup is required. Application registration is immediate, and scopes are clearly documented. Main effort is configuring redirect URIs and integrating the authorization flow.",
+    "handsOnEffort": "1–2 hours to register, configure, test OAuth flow, and validate scopes with a test Discord server.",
+    "approvalWait": "No approval wait. Application is usable immediately upon creation.",
+    "biggestBlocker": "Confirming Composio's managed OAuth option and coverage. If managed option unavailable, developer must implement OAuth flow and token refresh independently."
+  },
+  "createdAt": "2026-10-21T15:20:33.149Z"
+}

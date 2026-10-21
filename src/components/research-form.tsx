@@ -49,6 +49,19 @@ export function ResearchForm() {
         setState({ kind: "error", title: response.status === 503 ? "Research needs server setup." : "Research could not complete.", message: payload.error || payload.detail || "Try again." });
         return;
       }
+      if (typeof window !== "undefined" && payload.shareId) {
+        try {
+          const toStore = {
+            id: payload.shareId,
+            input: value,
+            createdAt: new Date().toISOString(),
+            result: payload.result,
+          };
+          localStorage.setItem(`oauth_research_${payload.shareId}`, JSON.stringify(toStore));
+        } catch (err) {
+          console.warn("Could not save to localStorage:", err);
+        }
+      }
       setState({ kind: "result", input: value, result: payload.result, shareId: payload.shareId });
     } catch {
       setState({ kind: "error", message: "The research request could not reach the server. Try again." });

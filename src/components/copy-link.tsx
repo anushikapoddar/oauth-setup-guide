@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 
-export function CopyLink() {
+export function CopyLink({ url }: { url?: string } = {}) {
   const [copied, setCopied] = useState(false);
   async function copy() {
-    await navigator.clipboard.writeText(window.location.href);
+    const targetUrl = url || window.location.href;
+    await navigator.clipboard.writeText(targetUrl);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1800);
   }

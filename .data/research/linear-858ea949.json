@@ -1,0 +1,85 @@
+{
+  "id": "linear-858ea949",
+  "input": "Linear",
+  "result": {
+    "status": "complete",
+    "provider": {
+      "name": "Linear",
+      "canonicalWebsite": "https://linear.app",
+      "identityReason": "Linear is a project management and issue tracking platform. The identity hint 'Linear' matches the canonical product at linear.app with clear OAuth and API documentation."
+    },
+    "oauthSupport": "confirmed",
+    "managedOption": {
+      "availability": "unconfirmed",
+      "details": "Composio integration documentation for Linear was not directly confirmed. Linear supports OAuth 2.0 with standard authorization code flow, but Composio's managed OAuth coverage for Linear is not verified.",
+      "sourceUrl": "https://developers.linear.app"
+    },
+    "setup": [
+      "Confirmed: Register OAuth app at https://linear.app/settings/api/applications by logging into Linear workspace.",
+      "Confirmed: Redirect URI must be HTTPS and must exactly match the registered URL.",
+      "Confirmed: OAuth registration requires workspace admin access.",
+      "Confirmed: After registration, obtain Client ID and Client Secret from the application settings.",
+      "Confirmed: Authorization endpoint is https://linear.app/oauth/authorize; token endpoint is https://api.linear.app/oauth/token."
+    ],
+    "scopeFindings": [
+      "Confirmed: Linear uses space-separated scope strings (e.g., 'read', 'write', 'admin').",
+      "Confirmed: 'read' scope grants read access to issues, projects, users, and team data.",
+      "Confirmed: 'write' scope allows creation and modification of issues and related objects.",
+      "Confirmed: 'admin' scope required for workspace-level operations and user management.",
+      "Confirmed: Scope 'comments:create' available for creating comments on issues.",
+      "Confirmed: Scope 'issues:create' available for creating issues.",
+      "Estimate: Exact scope granularity and default permissions not fully published; test with minimal scopes and expand as needed."
+    ],
+    "testAndLaunch": [
+      "Confirmed: Linear provides a GraphQL API sandbox at https://linear.app/graphql/explorer for testing queries before production.",
+      "Confirmed: Test users and organizations can be created within a free Linear workspace for development.",
+      "Confirmed: OAuth app can be tested in the same workspace before deployment.",
+      "Unknown: Whether Linear enforces additional review or approval before production OAuth apps access customer workspaces."
+    ],
+    "review": [
+      "Confirmed: Linear workspace admins can review and revoke OAuth app access via workspace settings.",
+      "Confirmed: Apps requesting 'admin' scope may require explicit user consent during OAuth flow.",
+      "Unknown: Whether Linear maintains a public app directory or requires apps to pass security review before general availability."
+    ],
+    "support": [
+      "Confirmed: Official Linear API documentation and OAuth reference available at https://developers.linear.app.",
+      "Confirmed: Linear support available through in-app help and workspace-level support tickets.",
+      "Confirmed: GraphQL API explorer provides interactive testing and schema documentation.",
+      "Estimate: Response time for OAuth or API support inquiries not published."
+    ],
+    "nextAction": "Begin OAuth registration by creating a Linear workspace and adding an OAuth application in workspace settings. Test authorization flow with 'read' scope using the GraphQL explorer, then expand scopes as your integration requirements grow. Confirm Composio's managed OAuth support for Linear by contacting Composio support or checking their integration settings.",
+    "sources": [
+      {
+        "title": "Linear Developers – OAuth and Authentication",
+        "url": "https://developers.linear.app/docs/oauth",
+        "publisher": "Linear",
+        "whyItMatters": "Official OAuth 2.0 implementation details, endpoints, and registration instructions."
+      },
+      {
+        "title": "Linear API Reference – Getting Started",
+        "url": "https://developers.linear.app/docs/graphql/working-with-the-graphql-api",
+        "publisher": "Linear",
+        "whyItMatters": "GraphQL API setup, authentication, and scope documentation."
+      },
+      {
+        "title": "Linear OAuth Application Registration",
+        "url": "https://linear.app/settings/api/applications",
+        "publisher": "Linear",
+        "whyItMatters": "Workspace-level OAuth app registration interface."
+      },
+      {
+        "title": "Linear GraphQL Explorer",
+        "url": "https://linear.app/graphql/explorer",
+        "publisher": "Linear",
+        "whyItMatters": "Interactive testing environment for queries and mutation testing before production."
+      }
+    ],
+    "uncertainties": [
+      "Whether Composio offers a managed OAuth integration for Linear; requires Composio documentation review or vendor contact.",
+      "Exact scope permission boundaries and whether additional consent flows exist for elevated permissions.",
+      "Whether Linear requires app submission or security review for production use beyond workspace-level registration.",
+      "Linear's SLA or typical response time for API or OAuth support requests."
+    ]
+  },
+  "createdAt": "2026-10-21T14:38:19.192Z"
+}

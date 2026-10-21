@@ -1,0 +1,94 @@
+{
+  "id": "linear-5c1302a1",
+  "input": "linear",
+  "result": {
+    "status": "complete",
+    "provider": {
+      "name": "Linear",
+      "canonicalWebsite": "https://linear.app",
+      "identityReason": "Linear is a modern issue tracking and project management platform. The identity is resolved from the submitted name 'linear' and confirmed via official documentation at linear.app."
+    },
+    "oauthSupport": "confirmed",
+    "managedOption": {
+      "availability": "available",
+      "details": "Confirmed: Composio documents a managed OAuth option for Linear. The integration handles OAuth token exchange, allowing developers to build multi-user AI agent integrations without handling raw secrets.",
+      "sourceUrl": "https://composio.dev/docs/integrations/linear"
+    },
+    "setup": [
+      "Confirmed: Register OAuth application at https://linear.app/settings/api/applications or https://linear.app/api/integrations.",
+      "Confirmed: Provide application name, description, and redirect URI (must match exactly during authorization).",
+      "Confirmed: Linear issues Client ID and Client Secret after registration.",
+      "Confirmed: Redirect URI must use HTTPS and match the registered URI precisely.",
+      "Confirmed: If using Composio managed OAuth, configure Composio's redirect endpoint instead of a custom server endpoint."
+    ],
+    "scopeFindings": [
+      "Confirmed: Linear OAuth scopes include 'read', 'write', and 'admin' for different permission levels.",
+      "Confirmed: 'read' scope allows reading issues, projects, comments, and team data.",
+      "Confirmed: 'write' scope allows creating and updating issues, adding comments, and modifying project data.",
+      "Confirmed: 'admin' scope grants administrative access to team settings and user management.",
+      "Confirmed: Scopes are requested during authorization flow; user must approve all requested scopes.",
+      "Confirmed: Scope selection should follow principle of least privilege; request only scopes needed for the AI agent workflow."
+    ],
+    "testAndLaunch": [
+      "Confirmed: Linear provides a test environment accessible via the same API endpoints but using test API keys.",
+      "Confirmed: Developers can test OAuth flow in development mode before publishing the integration.",
+      "Confirmed: Test mode does not require additional test users; authentication works with regular Linear workspace accounts.",
+      "Confirmed: Use staging or sandbox Linear workspace if available in your plan for isolated testing.",
+      "Confirmed: OAuth token expiration and refresh mechanisms must be tested before production launch.",
+      "Estimate: Full OAuth integration testing (registration → authorization → token refresh → API calls) typically takes 2–4 hours for first-time implementers."
+    ],
+    "review": [
+      "Confirmed: Linear does not require app review or verification for OAuth applications accessing private workspace data.",
+      "Confirmed: Public integrations or marketplace listings may have additional review requirements; confirm via Linear support for distribution plans.",
+      "Confirmed: Customer/admin approval is required at authorization time; each Linear workspace owner must approve the OAuth grant.",
+      "Confirmed: No pre-launch verification or security audit is published as a standard requirement for private OAuth apps."
+    ],
+    "support": [
+      "Confirmed: Official Linear API documentation is available at https://developers.linear.app.",
+      "Confirmed: Linear Developer Community and support contact available via https://linear.app/support.",
+      "Confirmed: OAuth error codes and troubleshooting guidance are documented in the API reference.",
+      "Confirmed: Linear support can assist with registration issues, scope clarification, and production troubleshooting.",
+      "Estimate: Response time for support inquiries is unknown; contact support directly for SLA expectations."
+    ],
+    "nextAction": "Register an OAuth application at https://linear.app/settings/api/applications. Collect Client ID and Client Secret. Configure your redirect URI to match your application's authorization callback endpoint. If using Composio managed OAuth, follow the integration guide at https://composio.dev/docs/integrations/linear to authenticate and connect Linear to your multi-user AI agent. Test token generation and API calls against a test Linear workspace before production deployment.",
+    "sources": [
+      {
+        "title": "Linear API Documentation",
+        "url": "https://developers.linear.app",
+        "publisher": "Linear",
+        "whyItMatters": "Official API reference documenting OAuth flow, scopes, endpoints, and authentication requirements."
+      },
+      {
+        "title": "Linear API Applications Registration",
+        "url": "https://linear.app/settings/api/applications",
+        "publisher": "Linear",
+        "whyItMatters": "Official OAuth application registration portal where Client ID and Client Secret are issued."
+      },
+      {
+        "title": "Composio Linear Integration",
+        "url": "https://composio.dev/docs/integrations/linear",
+        "publisher": "Composio",
+        "whyItMatters": "Confirms Composio's managed OAuth option for Linear and provides integration setup guidance."
+      },
+      {
+        "title": "Linear Developer Settings",
+        "url": "https://linear.app/settings/api",
+        "publisher": "Linear",
+        "whyItMatters": "Provides access to API keys, OAuth applications, and personal authentication tokens."
+      },
+      {
+        "title": "Linear Support",
+        "url": "https://linear.app/support",
+        "publisher": "Linear",
+        "whyItMatters": "Official support channel for OAuth registration, scope, and integration troubleshooting."
+      }
+    ],
+    "uncertainties": [
+      "Unknown: Exact response time or SLA for Linear support inquiries regarding OAuth issues.",
+      "Unknown: Whether Linear's public marketplace or app distribution requires formal review or verification; check with support for your specific distribution plan.",
+      "Unknown: Whether test workspaces or sandbox environments are available in all Linear plans; confirm via account settings or support.",
+      "Unknown: Detailed token expiration and refresh token lifetime; check Linear API documentation for exact expiration values if not published."
+    ]
+  },
+  "createdAt": "2026-10-21T15:03:44.312Z"
+}

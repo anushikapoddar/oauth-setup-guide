@@ -1,0 +1,95 @@
+{
+  "id": "notion-174698b7",
+  "input": "notion",
+  "result": {
+    "status": "complete",
+    "provider": {
+      "name": "Notion",
+      "canonicalWebsite": "https://www.notion.so",
+      "identityReason": "Notion is a workspace productivity and database platform at notion.so with official OAuth and API for third-party integrations."
+    },
+    "oauthSupport": "confirmed",
+    "managedOption": {
+      "availability": "unconfirmed",
+      "details": "Composio lists Notion as an available integration, but the exact OAuth delegation method (managed vs. direct) is not documented on Composio's public pages.",
+      "sourceUrl": "https://composio.dev/integrations"
+    },
+    "setup": [
+      "Confirmed: Register your integration at https://www.notion.so/my-integrations to receive Client ID and Client Secret.",
+      "Confirmed: Notion OAuth endpoints are at https://api.notion.com/v1/oauth/authorize (authorization) and https://api.notion.com/v1/oauth/token (token exchange).",
+      "Confirmed: Set one or more Redirect URIs during app registration; Notion requires exact URI match (no wildcards).",
+      "Confirmed: OAuth flow is server-side (Authorization Code) with PKCE support optional but recommended.",
+      "Confirmed: During authorization, users grant your app access to specified pages and databases; access is not workspace-wide by default."
+    ],
+    "scopeFindings": [
+      "Confirmed: Notion uses capabilities-based permissions, not traditional OAuth scopes. Capabilities are configured per integration in the integration settings.",
+      "Confirmed: Available capabilities include read content, update content, insert content, and delete content at the page/database level.",
+      "Confirmed: Integrations request access to specific pages/databases; users explicitly grant access during the OAuth consent flow.",
+      "Confirmed: No pre-defined scope list exists; permissions are object-specific. Documentation at https://developers.notion.com/reference/capabilities describes integration permissions.",
+      "Estimate: A typical multi-user AI agent will need read and update capabilities on user-selected pages and databases."
+    ],
+    "testAndLaunch": [
+      "Confirmed: Test mode is not required. Developer can create a test integration and connect it to a personal or test workspace immediately after registration.",
+      "Confirmed: No sandbox environment exists; testing occurs directly in Notion with real workspaces.",
+      "Confirmed: Integrations begin in 'internal' mode (accessible only to the workspace owner) until submitted for public distribution.",
+      "Confirmed: To make your integration public, submit it for review via https://www.notion.so/my-integrations; review includes verification that the integration follows Notion API guidelines and security practices.",
+      "Unknown: Estimated review time for public distribution is not published by Notion."
+    ],
+    "review": [
+      "Confirmed: Public integrations require submission and approval via Notion's integration review process.",
+      "Confirmed: Review criteria include proper OAuth implementation, correct permission handling, compliance with Terms of Service, and security (no hardcoded secrets, secure token storage).",
+      "Confirmed: Notion's review team may request changes or rejections if the integration misuses data or violates guidelines.",
+      "Unknown: No published SLA or estimated turnaround for review decisions."
+    ],
+    "support": [
+      "Confirmed: Official developer documentation is at https://developers.notion.com with API reference, OAuth guide, and capability details.",
+      "Confirmed: Notion offers a community Slack workspace for developer support and questions.",
+      "Confirmed: Official support for integrations and OAuth issues is available through Notion's Help Center and developer forum.",
+      "Confirmed: Notion publishes a changelog and deprecation notices at https://developers.notion.com/changelog for API updates."
+    ],
+    "nextAction": "Register your integration at https://www.notion.so/my-integrations, configure the Redirect URI (e.g., https://yourdomain.com/oauth/callback), retrieve your Client ID and Secret, then implement the Authorization Code flow using Notion's OAuth endpoints. Test with a personal workspace before submitting for public review. Verify whether Composio's managed OAuth option handles Notion token refresh and permission mapping.",
+    "sources": [
+      {
+        "title": "Notion Integrations Dashboard",
+        "url": "https://www.notion.so/my-integrations",
+        "publisher": "Notion",
+        "whyItMatters": "Official registration path for OAuth apps; required to obtain Client ID and Secret."
+      },
+      {
+        "title": "Notion Developers – Authorization",
+        "url": "https://developers.notion.com/reference/authorization",
+        "publisher": "Notion",
+        "whyItMatters": "Canonical OAuth flow, endpoints, and redirect URI requirements for Notion integrations."
+      },
+      {
+        "title": "Notion Developers – Capabilities",
+        "url": "https://developers.notion.com/reference/capabilities",
+        "publisher": "Notion",
+        "whyItMatters": "Defines Notion's permission model (capabilities) instead of scopes; explains how integrations request and users grant access."
+      },
+      {
+        "title": "Notion Developers – Getting Started",
+        "url": "https://developers.notion.com/docs/getting-started",
+        "publisher": "Notion",
+        "whyItMatters": "Comprehensive guide to integration setup, authentication, and best practices."
+      },
+      {
+        "title": "Composio Integrations Directory",
+        "url": "https://composio.dev/integrations",
+        "publisher": "Composio",
+        "whyItMatters": "Confirms Notion is available as a Composio managed integration; does not yet confirm whether OAuth delegation is included."
+      }
+    ],
+    "uncertainties": [
+      "Whether Composio's Notion integration includes managed OAuth token refresh or requires direct OAuth implementation.",
+      "Exact estimated time for Notion's public integration review and approval.",
+      "Whether Notion supports token refresh in the OAuth flow (refresh_token grant) or requires re-authorization."
+    ],
+    "difficulty": "moderate",
+    "difficultyReason": "Notion OAuth setup is straightforward (standard Authorization Code flow), but the capabilities-based permission model differs from traditional scopes, requiring careful configuration to avoid over-requesting access. Public review adds a compliance step. Composio's managed option may hide complexity.",
+    "handsOnEffort": "2–4 hours to set up OAuth, test with a workspace, and prepare for public submission; 1–2 additional hours if changes are requested during review.",
+    "approvalWait": "Unknown: Notion does not publish review turnaround time.",
+    "biggestBlocker": "No published SLA for public integration review; blocking approval time is uncertain."
+  },
+  "createdAt": "2026-10-21T15:28:32.372Z"
+}
