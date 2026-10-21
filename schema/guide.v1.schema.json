@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/debuggingakshat/OAuth-App/blob/main/schema/guide.v1.schema.json",
+  "title": "OAuth setup guide v1",
+  "description": "Shared data contract for curated and generated, scenario-specific guides. Cross-record ID resolution is checked by the application validator.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "status", "provider", "scenario", "summary", "managedOption", "prerequisites", "scopes", "stages", "review", "blockers", "handoffs", "sources", "claims", "attempts", "limitations"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "status": { "enum": ["researched_draft", "checked_guide", "partial"] },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "website", "oauthSupport", "checkedAt", "claimRefs"],
+      "properties": {
+        "name": { "$ref": "#/$defs/nonempty" },
+        "website": { "$ref": "#/$defs/httpsUrl" },
+        "oauthSupport": { "enum": ["supported", "unsupported", "unconfirmed"] },
+        "checkedAt": { "type": "string", "format": "date" },
+        "claimRefs": { "$ref": "#/$defs/claimRefs" }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "audience", "registrationPath", "assumptions"],
+      "properties": {
+        "capability": { "$ref": "#/$defs/nonempty" },
+        "audience": { "$ref": "#/$defs/nonempty" },
+        "registrationPath": { "enum": ["managed", "custom", "undecided"] },
+        "assumptions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonempty" } }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["difficulty", "handsOnEffort", "approvalWait", "biggestBlocker", "nextAction"],
+      "properties": {
+        "difficulty": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rating", "reason", "claimRefs"],
+          "properties": {
+            "rating": { "enum": ["low", "moderate", "high", "unknown"] },
+            "reason": { "$ref": "#/$defs/nonempty" },
+            "claimRefs": { "$ref": "#/$defs/claimRefs" }
+          }
+        },
+        "handsOnEffort": { "$ref": "#/$defs/timeEstimate" },
+        "approvalWait": { "$ref": "#/$defs/timeEstimate" },
+        "biggestBlocker": { "$ref": "#/$defs/nonempty" },
+        "nextAction": { "$ref": "#/$defs/linkedAction" }
+      }
+    },
+    "managedOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["availability", "details", "customWhen", "claimRefs"],
+      "properties": {
+        "availability": { "enum": ["available", "unavailable", "unconfirmed"] },
+        "details": { "$ref": "#/$defs/nonempty" },
+        "customWhen": { "$ref": "#/$defs/nonempty" },
+        "claimRefs": { "$ref": "#/$defs/claimRefs" }
+      }
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "requirement", "owner", "condition", "nextAction", "claimRefs"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "requirement": { "$ref": "#/$defs/nonempty" },
+          "owner": { "$ref": "#/$defs/owner" },
+          "condition": { "$ref": "#/$defs/nonempty" },
+          "nextAction": { "$ref": "#/$defs/linkedAction" },
+          "claimRefs": { "$ref": "#/$defs/claimRefs" }
+        }
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "plainLanguageAccess", "whyNeeded", "sensitivity", "claimRefs"],
+        "properties": {
+          "name": { "$ref": "#/$defs/nonempty" },
+          "plainLanguageAccess": { "$ref": "#/$defs/nonempty" },
+          "whyNeeded": { "$ref": "#/$defs/nonempty" },
+          "sensitivity": { "enum": ["standard", "sensitive", "restricted", "unknown"] },
+          "claimRefs": { "$ref": "#/$defs/claimRefs" }
+        }
+      }
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "accessState", "entryCondition", "exitResult", "owner", "nextAction", "steps"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "title": { "$ref": "#/$defs/nonempty" },
+          "accessState": { "enum": ["decide", "prepare", "register", "test", "submit", "launch", "investigate"] },
+          "entryCondition": { "$ref": "#/$defs/nonempty" },
+          "exitResult": { "$ref": "#/$defs/nonempty" },
+          "owner": { "$ref": "#/$defs/owner" },
+          "nextAction": { "$ref": "#/$defs/linkedAction" },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["number", "action", "condition", "owner", "expectedResult", "officialUrl", "claimRefs"],
+              "properties": {
+                "number": { "type": "integer", "minimum": 1 },
+                "action": { "$ref": "#/$defs/nonempty" },
+                "condition": { "$ref": "#/$defs/nonempty" },
+                "owner": { "$ref": "#/$defs/owner" },
+                "expectedResult": { "$ref": "#/$defs/nonempty" },
+                "officialUrl": { "anyOf": [{ "$ref": "#/$defs/httpsUrl" }, { "type": "null" }] },
+                "claimRefs": { "$ref": "#/$defs/claimRefs" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirement", "condition", "decisionOwner", "evidenceToPrepare", "submissionUrl", "claimRefs"],
+      "properties": {
+        "requirement": { "enum": ["required", "conditional", "not_applicable", "unknown"] },
+        "condition": { "$ref": "#/$defs/nonempty" },
+        "decisionOwner": { "$ref": "#/$defs/nonempty" },
+        "evidenceToPrepare": { "type": "array", "items": { "$ref": "#/$defs/nonempty" } },
+        "submissionUrl": { "anyOf": [{ "$ref": "#/$defs/httpsUrl" }, { "type": "null" }] },
+        "claimRefs": { "$ref": "#/$defs/claimRefs" }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["symptom", "possibleCause", "recovery", "owner", "officialHelpUrl", "claimRefs"],
+        "properties": {
+          "symptom": { "$ref": "#/$defs/nonempty" },
+          "possibleCause": { "$ref": "#/$defs/nonempty" },
+          "recovery": { "$ref": "#/$defs/nonempty" },
+          "owner": { "$ref": "#/$defs/owner" },
+          "officialHelpUrl": { "anyOf": [{ "$ref": "#/$defs/httpsUrl" }, { "type": "null" }] },
+          "claimRefs": { "$ref": "#/$defs/claimRefs" }
+        }
+      }
+    },
+    "handoffs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agentCanPrepare", "humanMustDo", "providerDecides"],
+      "properties": {
+        "agentCanPrepare": { "type": "array", "items": { "$ref": "#/$defs/nonempty" } },
+        "humanMustDo": { "type": "array", "items": { "$ref": "#/$defs/nonempty" } },
+        "providerDecides": { "type": "array", "items": { "$ref": "#/$defs/nonempty" } }
+      }
+    },
+    "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "claims": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/claim" } },
+    "attempts": { "type": "array", "items": { "$ref": "#/$defs/attempt" } },
+    "limitations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonempty" } }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+    "nonempty": { "type": "string", "minLength": 1 },
+    "httpsUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "owner": { "enum": ["agent", "developer", "customer", "customer_admin", "provider"] },
+    "claimRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "linkedAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "owner", "url"],
+      "properties": {
+        "text": { "$ref": "#/$defs/nonempty" },
+        "owner": { "$ref": "#/$defs/owner" },
+        "url": { "anyOf": [{ "$ref": "#/$defs/httpsUrl" }, { "type": "null" }] }
+      }
+    },
+    "timeEstimate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "display", "basis", "condition", "claimRefs"],
+      "properties": {
+        "kind": { "enum": ["observed", "published", "estimated", "unknown", "not_applicable"] },
+        "display": { "$ref": "#/$defs/nonempty" },
+        "basis": { "$ref": "#/$defs/nonempty" },
+        "condition": { "$ref": "#/$defs/nonempty" },
+        "claimRefs": { "$ref": "#/$defs/claimRefs" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "url", "publisher", "accessedAt", "supportingNote"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/nonempty" },
+        "url": { "$ref": "#/$defs/httpsUrl" },
+        "publisher": { "$ref": "#/$defs/nonempty" },
+        "accessedAt": { "type": "string", "format": "date" },
+        "supportingNote": { "$ref": "#/$defs/nonempty" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "label", "condition", "basis", "sourceRefs", "attemptRef"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "statement": { "$ref": "#/$defs/nonempty" },
+        "label": { "enum": ["observed", "official_source", "estimated", "not_verified"] },
+        "condition": { "$ref": "#/$defs/nonempty" },
+        "basis": { "$ref": "#/$defs/nonempty" },
+        "sourceRefs": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "attemptRef": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] }
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "date", "action", "outcome", "accessLimit"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "date": { "type": "string", "format": "date" },
+        "action": { "$ref": "#/$defs/nonempty" },
+        "outcome": { "$ref": "#/$defs/nonempty" },
+        "accessLimit": { "type": "string" }
+      }
+    }
+  }
+}

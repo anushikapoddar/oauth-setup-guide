@@ -1,0 +1,25 @@
+# Dependencies and generated builds
+/node_modules/
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Local environment and credentials
+.env*
+!.env.example
+*.pem
+
+# Logs, test output, and OS files
+/coverage/
+npm-debug.log*
+.DS_Store
+
+# Local Codex and deployment state
+/.agents/
+/.codex/
+/.wrangler/
+/.sites-runtime/
+/outputs/
+/work/
+/.data/
