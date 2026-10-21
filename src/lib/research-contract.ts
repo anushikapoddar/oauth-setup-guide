@@ -174,6 +174,7 @@ export function toDisplayGuide(result: ResearchResult): DisplayGuide {
   ];
 
   // Scopes Table
+  const seenScopes = new Set<string>();
   const scopes: DisplayGuideScope[] = [];
   if (result.scopeFindings && result.scopeFindings.length > 0) {
     for (const raw of result.scopeFindings) {
@@ -181,6 +182,10 @@ export function toDisplayGuide(result: ResearchResult): DisplayGuide {
       // Attempt to extract scope name from quotes e.g. 'read' or "write"
       const match = text.match(/['"`]([a-zA-Z0-9_:.-]+)['"`]/);
       const name = match ? match[1] : (text.split(" ")[0] || "read");
+      if (seenScopes.has(name)) {
+        continue;
+      }
+      seenScopes.add(name);
       const isSensitive = name.toLowerCase().includes("admin") || name.toLowerCase().includes("delete") || text.toLowerCase().includes("sensitive") || text.toLowerCase().includes("elevated");
       scopes.push({
         name,

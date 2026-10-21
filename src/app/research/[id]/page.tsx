@@ -91,8 +91,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
               <p><strong>Registration path</strong>{guide.scenario.registrationPath}</p>
             </div>
             <ul>
-              {guide.scenario.assumptions.map((item) => (
-                <li key={item}>{item}</li>
+              {guide.scenario.assumptions.map((item, index) => (
+                <li key={`assumption-${index}`}>{item}</li>
               ))}
             </ul>
           </section>
@@ -120,7 +120,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
             <h2>Before you start</h2>
             <div className="prereq-list">
               {guide.prerequisites.map((item, index) => (
-                <div key={item.requirement}>
+                <div key={`prereq-${item.requirement}-${index}`}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <p>
                     <strong>{item.requirement}</strong>
@@ -136,8 +136,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
             <p className="section-number">04</p>
             <h2>Permissions in plain language</h2>
             <div className="scope-table" role="table" aria-label="OAuth scopes">
-              {guide.scopes.map((scope) => (
-                <div role="row" key={scope.name}>
+              {guide.scopes.map((scope, index) => (
+                <div role="row" key={`scope-${scope.name}-${index}`}>
                   <code>{scope.name}</code>
                   <p>
                     <strong>{scope.plainLanguageAccess}</strong>
@@ -154,7 +154,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
             <h2>Your setup path</h2>
             <div className="stage-list">
               {guide.stages.map((stage, index) => (
-                <div className="stage" key={stage.id}>
+                <div className="stage" key={`stage-${stage.id}-${index}`}>
                   <div className="stage-marker">{index + 1}</div>
                   <div>
                     <div className="stage-heading">
@@ -164,8 +164,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
                       </div>
                       <span>{stage.goal}</span>
                     </div>
-                    {stage.steps.map((step) => (
-                      <div className="stage-step" key={step.action}>
+                    {stage.steps.map((step, stepIndex) => (
+                      <div className="stage-step" key={`step-${stepIndex}`}>
                         <p>{step.action}</p>
                         <small>Expected result: {step.result}</small>
                         {step.url && (
@@ -200,8 +200,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
               <p>{guide.review.condition}</p>
               <h3>Prepare this evidence</h3>
               <ul>
-                {guide.review.evidence.map((item) => (
-                  <li key={item}>{item}</li>
+                {guide.review.evidence.map((item, index) => (
+                  <li key={`evidence-${index}`}>{item}</li>
                 ))}
               </ul>
             </div>
@@ -211,8 +211,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
             <p className="section-number">07</p>
             <h2>When you get blocked</h2>
             <div className="blocker-list">
-              {guide.blockers.map((blocker) => (
-                <details key={blocker.symptom}>
+              {guide.blockers.map((blocker, index) => (
+                <details key={`blocker-${index}`}>
                   <summary>
                     {blocker.symptom}
                     <span>+</span>
@@ -237,8 +237,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
                 <span>Agent</span>
                 <h3>Can prepare</h3>
                 <ul>
-                  {guide.handoffs.agent.map((item) => (
-                    <li key={item}>{item}</li>
+                  {guide.handoffs.agent.map((item, index) => (
+                    <li key={`agent-${index}`}>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -246,8 +246,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
                 <span>You</span>
                 <h3>Must complete</h3>
                 <ul>
-                  {guide.handoffs.developer.map((item) => (
-                    <li key={item}>{item}</li>
+                  {guide.handoffs.developer.map((item, index) => (
+                    <li key={`dev-${index}`}>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -255,8 +255,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
                 <span>Provider</span>
                 <h3>Decides</h3>
                 <ul>
-                  {guide.handoffs.provider.map((item) => (
-                    <li key={item}>{item}</li>
+                  {guide.handoffs.provider.map((item, index) => (
+                    <li key={`prov-${index}`}>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -268,7 +268,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
             <h2>Sources and limits</h2>
             <div className="source-list">
               {guide.sources.map((source, index) => (
-                <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
+                <a href={source.url} target="_blank" rel="noreferrer" key={`source-${source.url}-${index}`}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <p>
                     <strong>{source.title}</strong>
@@ -282,8 +282,8 @@ export default async function ResearchPage({ params }: { params: Promise<{ id: s
               <div className="limitations">
                 <strong>What remains uncertain</strong>
                 <ul>
-                  {guide.uncertainties.map((item) => (
-                    <li key={item}>{item}</li>
+                  {guide.uncertainties.map((item, index) => (
+                    <li key={`uncert-${index}`}>{item}</li>
                   ))}
                 </ul>
               </div>
