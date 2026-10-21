@@ -576,4 +576,6 @@ Dependencies to resolve before the relevant implementation: model/search API acc
 
 **Limitations:** no Discord application, Linear OAuth app, or Notion public integration was registered by this project. All guide content is based on official documentation review. Exact Composio managed scope sets for these three providers remain unverified.
 
+**UI Alignment:** updated the unfamiliar app live-research placeholder from Linear to Figma (`e.g. Figma or figma.com`) to prevent confusion now that Linear is part of the curated library, and registered Discord, Linear, and Notion in the form's client-side known provider resolution table.
+
 
