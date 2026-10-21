@@ -20,8 +20,8 @@ Today, developers face four core blindspots:
 4. **Agent vs. Human Boundary**: What can an AI agent prepare or scaffold vs. where must a human take over (paying developer fees, logging into consoles, granting workspace admin approvals).
 
 OAuth Ready solves this by providing:
-- **A Searchable Curated Library** covering 3 contrasting real-world archetypes (GitHub, Google Calendar, Slack).
-- **A Real-Time Investigation Agent** that inspects unfamiliar apps (e.g., Linear, Notion, Figma) live and generates a complete, shareable 9-section launch plan.
+- **A Searchable Curated Library** covering 6 contrasting real-world archetypes (GitHub, Google Calendar, Slack, Discord, Linear, Notion).
+- **A Real-Time Investigation Agent** that inspects unfamiliar apps (e.g., Figma, Asana, Jira) live and generates a complete, shareable 9-section launch plan.
 
 ---
 
@@ -58,10 +58,12 @@ Every guide in the system (both curated and live-generated) follows the exact sa
 
 | Provider | Archetype / Setup Challenge | Difficulty | Hands-on Effort | External Wait | Key Nuance / Blocker |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **GitHub** | *Developer-friendly & Self-service* | **Low** | 10–20 mins | Instant / None | Recommends GitHub Apps over OAuth Apps for fine-grained repo permissions; organization approval is conditional. |
+| **GitHub** | *Developer-friendly & Self-service* | **Moderate** | 10–20 mins | Instant / None | Recommends GitHub Apps over OAuth Apps for fine-grained repo permissions; organization approval is conditional. |
 | **Google Calendar** | *Sensitive Scope & Audit Gatekeeper* | **High** | 1–2 hours | 3–5 business days | Event access (`calendar.events`) is classified as Sensitive; requires privacy policy URL, domain verification, and YouTube demo video. |
 | **Slack** | *Enterprise & Distribution Threshold* | **High** | 1–2 hours | 2–3 weeks | Unlisted distribution is fast, but Slack Marketplace listing requires the app to be installed on **10 or more active workspaces** before submission. |
-| **Linear** | *Unfamiliar Live Generation Example* | **Moderate** | 15–30 mins | Instant / Self-service | Space-separated scopes (`read`, `write`, `admin`); requires Linear Workspace Admin privileges to register applications. |
+| **Discord** | *Bot-Scoped & Self-service with Scale Gate* | **Low** | 10–20 mins | Instant (verification at 100+ servers) | No review needed for small bots; at 100+ servers Discord requires verification with privileged intent justification. |
+| **Linear** | *Simple Self-service, Admin-Gated Registration* | **Low** | 15–30 mins | Instant / Self-service | Granular scopes (`read`, `write`, `issues:create`); requires Linear Workspace Admin privileges to register OAuth applications. |
+| **Notion** | *Page-Picker Permission Model* | **Moderate** | 20–40 mins | Instant for self-service | No traditional string scopes — users select specific pages and databases to share via a page picker during authorization. |
 
 ---
 

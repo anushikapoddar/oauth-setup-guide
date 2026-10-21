@@ -560,3 +560,20 @@ Dependencies to resolve before the relevant implementation: model/search API acc
 
 **Delivered:** initialized Git locally, created the private GitHub repository `https://github.com/anushikapoddar/oauth-setup-guide`, and synchronized all commits to `main`. Upgraded `src/app/research/[id]/page.tsx` and `src/lib/research-contract.ts` so that live-generated guides match the full 9-section launch plan standard of curated guides. Authored a comprehensive `README.md` addressing all PM evaluation criteria: the 3-actor model, Managed Auth vs. Custom OAuth decision tree, effort vs. wait distinctions, agent vs. human boundaries, setup instructions, and honest limitations. Verified that the working experience is runnable locally and fully shareable.
 
+### Guide library expansion — 21 October 2026
+
+**Delivered:** expanded the curated guide library from 3 providers (GitHub, Google Calendar, Slack) to 6 providers by adding Discord, Linear, and Notion. Each new guide follows the same 9-section launch plan contract. Updated `README.md` archetypes table and this file.
+
+**Provider selection rationale:** the three new providers were chosen to diversify the archetype coverage:
+- **Discord** — a *bot-scoped self-service* archetype with an unusual *scale gate* (verification required at 100+ servers rather than at registration time). This contrasts with both the instant self-service model (GitHub) and the upfront review model (Google Calendar, Slack).
+- **Linear** — a *simple self-service* archetype with granular scopes (`read`, `write`, `issues:create`, `comments:create`) and an *admin-gated registration* requirement (Workspace Admin needed). Previously used only as a live-generation test target; now elevated to a curated guide.
+- **Notion** — a *unique permission model* archetype where traditional OAuth string scopes are replaced by a *page-picker* during authorization. The user selects exactly which pages and databases to share, making Notion's OAuth fundamentally different from every other provider in the library.
+
+**Sources checked:**
+- Discord: [OAuth2 documentation](https://discord.com/developers/docs/topics/oauth2), [Developer Portal](https://discord.com/developers/applications), [Verification guide](https://support-dev.discord.com/hc/en-us/articles/23926564536471-How-to-Get-Your-App-Verified) — accessed 21 October 2026.
+- Linear: [OAuth authentication](https://developers.linear.app/docs/oauth/authentication), [GraphQL API](https://developers.linear.app/docs/graphql/working-with-the-graphql-api) — accessed 21 October 2026.
+- Notion: [Authorization guide](https://developers.notion.com/docs/authorization), [API Reference](https://developers.notion.com/reference/intro) — accessed 21 October 2026.
+
+**Limitations:** no Discord application, Linear OAuth app, or Notion public integration was registered by this project. All guide content is based on official documentation review. Exact Composio managed scope sets for these three providers remain unverified.
+
+
