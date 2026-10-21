@@ -94,7 +94,13 @@ export function ResearchForm() {
               <div className="research-result-columns"><div><b>Next action</b><span>{state.result.nextAction}</span></div><div><b>Managed OAuth</b><span>{state.result.managedOption.availability}: {state.result.managedOption.details}</span></div></div>
               <details><summary>Show research findings <span>+</span></summary><div className="finding-group"><b>Setup</b><ul>{state.result.setup.map((item) => <li key={item}>{item}</li>)}</ul><b>Scopes</b><ul>{state.result.scopeFindings.map((item) => <li key={item}>{item}</li>)}</ul><b>Test, launch, and review</b><ul>{[...state.result.testAndLaunch, ...state.result.review].map((item) => <li key={item}>{item}</li>)}</ul><b>Support</b><ul>{state.result.support.map((item) => <li key={item}>{item}</li>)}</ul></div></details>
               <div className="result-sources"><b>Official sources read</b>{state.result.sources.map((source) => <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>{source.title} ↗</a>)}</div>
-              {state.shareId && <Link className="result-share-link" href={`/research/${state.shareId}`}>Open and share the full guide →</Link>}
+              {state.shareId && (
+                <div style={{ marginTop: "16px", marginBottom: "14px" }}>
+                  <Link className="button primary" href={`/research/${state.shareId}`} style={{ display: "block", textAlign: "center", padding: "14px 20px", textDecoration: "none", fontSize: "14px", fontWeight: "700" }}>
+                    Open complete end-to-end guide →
+                  </Link>
+                </div>
+              )}
               {state.result.uncertainties.length > 0 && <p className="result-uncertainties"><b>Still uncertain:</b> {state.result.uncertainties.join(" ")}</p>}
             </div>
           )}
