@@ -4,6 +4,7 @@ import { saveResearch } from "@/lib/research-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 const MAX_INPUT_LENGTH = 160;
 const REQUEST_TIMEOUT_MS = 75_000;
