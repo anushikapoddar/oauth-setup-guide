@@ -22,3 +22,7 @@ npm-debug.log*
 /.sites-runtime/
 /outputs/
 /work/
+
+# Private personal interview briefing (local only - never push)
+docs/*interview*
+docs/*Interview*
