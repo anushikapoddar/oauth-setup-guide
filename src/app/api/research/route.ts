@@ -9,6 +9,7 @@ const MAX_INPUT_LENGTH = 160;
 const REQUEST_TIMEOUT_MS = 75_000;
 const DEFAULT_MODEL = "gpt-4.1-mini";
 const DEFAULT_GEMINI_MODEL = "gemini-3-flash-preview";
+const DEFAULT_ANTHROPIC_MODEL = "claude-haiku-4-5-20251001";
 const DUPLICATE_WINDOW_MS = 30_000;
 const recentRequests = new Map<string, number>();
 
@@ -70,6 +71,31 @@ function geminiResponseSchema() {
   return schema;
 }
 
+async function runAnthropic(input: string, identityHint: string, apiKey: string, signal: AbortSignal) {
+  const model = process.env.ANTHROPIC_MODEL || DEFAULT_ANTHROPIC_MODEL;
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    signal,
+    body: JSON.stringify({
+      model,
+      max_tokens: 3500,
+      system: researchInstructions + "\n\nReturn strictly valid JSON adhering to this schema:\n" + JSON.stringify(researchResultSchema),
+      messages: [
+        { role: "user", content: `Investigate this app/provider input: ${input}\nIdentity hint: ${identityHint}\nReturn JSON only.` },
+      ],
+    }),
+  });
+  const payload = await response.json() as { content?: Array<{ text?: string }>; error?: { message?: string } };
+  let text = payload.content?.[0]?.text || "";
+  text = text.replace(/^```json\s*/i, "").replace(/\s*```$/i, "").trim();
+  return { response, payload, text, model };
+}
+
 async function runOpenAI(input: string, identityHint: string, apiKey: string, signal: AbortSignal) {
   const model = process.env.OPENAI_MODEL || DEFAULT_MODEL;
   const response = await fetch("https://api.openai.com/v1/responses", {
@@ -123,12 +149,22 @@ export async function POST(request: Request) {
   recentRequests.set(requestKey, Date.now());
   for (const [key, timestamp] of recentRequests) if (Date.now() - timestamp >= DUPLICATE_WINDOW_MS) recentRequests.delete(key);
 
-  const provider = process.env.RESEARCH_PROVIDER || (process.env.GEMINI_API_KEY ? "gemini" : "openai");
-  const apiKey = provider === "gemini" ? process.env.GEMINI_API_KEY : process.env.OPENAI_API_KEY;
+  const provider = process.env.RESEARCH_PROVIDER || (
+    process.env.ANTHROPIC_API_KEY
+      ? "anthropic"
+      : process.env.GEMINI_API_KEY
+      ? "gemini"
+      : "openai"
+  );
+  const apiKey = provider === "anthropic"
+    ? process.env.ANTHROPIC_API_KEY
+    : provider === "gemini"
+    ? process.env.GEMINI_API_KEY
+    : process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return json({
       error: "Live research is not configured yet.",
-      detail: "Add GEMINI_API_KEY or OPENAI_API_KEY to the server environment. The key is never accepted from the browser.",
+      detail: "Add ANTHROPIC_API_KEY, GEMINI_API_KEY, or OPENAI_API_KEY to the server environment. The key is never accepted from the browser.",
       code: "missing_server_configuration",
     }, 503);
   }
@@ -139,6 +175,8 @@ export async function POST(request: Request) {
   try {
     const adapterResult = provider === "gemini"
       ? await runGemini(normalized.input, normalized.identityHint, apiKey, controller.signal)
+      : provider === "anthropic"
+      ? await runAnthropic(normalized.input, normalized.identityHint, apiKey, controller.signal)
       : await runOpenAI(normalized.input, normalized.identityHint, apiKey, controller.signal);
     const { response, payload, text, model } = adapterResult;
     if (!response.ok) return json({ error: "The research provider returned an error.", detail: payload.error?.message || "No further detail was returned.", runId }, 502);
