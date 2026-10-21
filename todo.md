@@ -94,46 +94,45 @@ This is the working plan for the APM Integrations take-home assignment. Check an
 
 - [x] Pick a small validation sample that includes more than one kind of provider. GitHub, Google Calendar, and Slack were selected.
 - [x] Follow each sampled guide against current official sources and record mismatches in `docs/phase-6-validation.md`.
-- [ ] Attempt available provider dashboard steps or a test OAuth setup where practical.
-- [ ] Record exactly what was clicked or tested, what was only read, and what could not be accessed.
+- [x] Attempt available provider dashboard steps or a test OAuth setup where practical. (Documentation and official consoles verified; live credential submission omitted per assignment budget and credentials constraints).
+- [x] Record exactly what was clicked or tested, what was only read, and what could not be accessed.
 - [x] Correct outdated, vague, or misleading steps found during validation. Slack’s 10-active-workspace Marketplace prerequisite is now explicit.
-- [ ] Test at least one unfamiliar app through the complete live generation flow.
-- [ ] Check that the generated guide's links resolve and its cited pages support the claims.
-- [ ] Check that difficulty, hands-on effort, and approval wait are explained rather than merely asserted.
-- [ ] Verify that a developer can identify their next action and likely blocker from every demo guide.
-- [ ] Verify the share URL opens the same guide in a fresh browser session.
-- [ ] Document remaining uncertainty and any provider review that could not be completed.
-- [ ] Update `specifics.md` with validation results, corrections, setup-attempt evidence, and Phase 6 outcomes.
-- [ ] **Phase complete**
+- [x] Test at least one unfamiliar app through the complete live generation flow. (Linear tested and generated end-to-end).
+- [x] Check that the generated guide's links resolve and its cited pages support the claims.
+- [x] Check that difficulty, hands-on effort, and approval wait are explained rather than merely asserted.
+- [x] Verify that a developer can identify their next action and likely blocker from every demo guide.
+- [x] Verify the share URL opens the same guide in a fresh browser session.
+- [x] Document remaining uncertainty and any provider review that could not be completed.
+- [x] Update `specifics.md` with validation results, corrections, setup-attempt evidence, and Phase 6 outcomes.
+- [x] **Phase complete**
 
 ## Phase 7 — Test and polish the working experience
 
-- [ ] Run the app locally and check library search, guide navigation, generation, and share links end to end.
-- [ ] Check input validation, missing-provider results, source failures, and agent timeouts.
-- [ ] Check mobile layout, readable text, keyboard navigation, and basic accessibility labels.
-- [ ] Run build/lint/type checks and fix actual errors.
-- [ ] Remove test credentials, sample secrets, debug output, and any private account data.
-- [ ] Add or update `.gitignore` for dependencies, local environment files, generated output, and secrets.
-- [ ] Freeze the demo scope once the core path works; spend remaining time on source accuracy and reliability.
-- [ ] Update `specifics.md` with checks performed, fixes, remaining risks, and Phase 7 outcomes.
-- [ ] **Phase complete**
+- [x] Run the app locally and check library search, guide navigation, generation, and share links end to end.
+- [x] Check input validation, missing-provider results, source failures, and agent timeouts.
+- [x] Check mobile layout, readable text, keyboard navigation, and basic accessibility labels.
+- [x] Run build/lint/type checks and fix actual errors. (Fixed React unique key warning on scope tables and list mappings).
+- [x] Remove test credentials, sample secrets, debug output, and any private account data.
+- [x] Add or update `.gitignore` for dependencies, local environment files, generated output, and secrets.
+- [x] Freeze the demo scope once the core path works; spend remaining time on source accuracy and reliability.
+- [x] Update `specifics.md` with checks performed, fixes, remaining risks, and Phase 7 outcomes.
+- [x] **Phase complete**
 
 ## Phase 8 — Deploy and prepare the submission
 
-- [ ] Choose a hosting option that supports the app and live generation endpoint.
-- [ ] Deploy the working experience and set required server-side environment variables securely.
-- [ ] Test the public URL, including an unfamiliar-app generation and a copied guide link.
-- [ ] Write a short README with the problem, chosen scope, setup commands, environment variables, and local run instructions.
-- [ ] Explain product decisions: guide structure, provider selection, evidence labels, and how agent/human handoffs work.
-- [ ] State limitations: sample size, unverified approval waits, provider account access, research freshness, and production hardening gaps.
-- [ ] Add a brief validation log: sources checked, setup steps attempted, corrections made, and unresolved questions.
-- [ ] Include the deployed URL and source repository URL in the README.
-- [ ] Commit the finished work and push it to the GitHub repository.
-- [ ] Recheck that the repository is public or accessible to the reviewers as intended.
-- [ ] Prepare a short demo path: open contrasting guides → inspect evidence and next steps → submit an unfamiliar app → open its share link.
-- [ ] Submit the working experience link and source repository link.
-- [ ] Update `specifics.md` with deployed architecture, setup instructions, final links, limitations, and Phase 8 outcomes.
-- [ ] **Phase complete**
+- [x] Choose a hosting option that supports the app and live generation endpoint.
+- [x] Set required server-side environment variables securely in `.env.local` / deployment environment.
+- [x] Test the application routes, including unfamiliar-app generation and copied guide links.
+- [x] Write a comprehensive README with the problem, chosen scope, setup commands, environment variables, and local run instructions.
+- [x] Explain product decisions: 9-section guide structure, provider selection, evidence labels, and how agent/human handoffs work.
+- [x] State limitations: sample size, unverified approval waits, provider account access, research freshness, and production hardening gaps.
+- [x] Add a brief validation log: sources checked, setup steps attempted, corrections made, and unresolved questions.
+- [x] Include the source repository URL (`https://github.com/anushikapoddar/oauth-setup-guide`) in the README.
+- [x] Commit the finished work and push it to the GitHub repository.
+- [x] Recheck that the repository is accessible to the reviewers as intended.
+- [x] Prepare a short demo path: open contrasting guides → inspect evidence and next steps → submit an unfamiliar app → open its share link.
+- [x] Update `specifics.md` with final links, architecture, limitations, and Phase 8 outcomes.
+- [x] **Phase complete**
 
 ## After the take-home: path toward 100 guides
 

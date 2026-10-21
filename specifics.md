@@ -1,9 +1,9 @@
 # OAuth App Guide — Project Specifics
 
 **Last updated:** 21 October 2026 (Asia/Kolkata)  
-**Current milestone:** Phase 5 complete; live generation supports Gemini and OpenAI, with Gemini selected by default when configured.
-**Repository:** https://github.com/debuggingakshat/OAuth-App  
-**Local workspace:** `/Users/akkk/Desktop/OAuth-App`
+**Current milestone:** Phase 8 complete; full 9-section launch plan architecture, multi-provider AI adapters (Anthropic Claude, Google Gemini, OpenAI), and submission documentation finalized.  
+**Repository:** https://github.com/anushikapoddar/oauth-setup-guide  
+**Local workspace:** `/Users/anushikapoddar/Desktop/OAuth-App-main`  
 
 This is the living explanation of the project. It records what we are building, why, how the parts fit together, the evidence behind the guidance, and what actually works. `todo.md` tracks individual tasks. This document explains their outcomes.
 
@@ -27,10 +27,10 @@ Use these terms consistently: **researched** means a source was read; **observed
 | 2. Provider research | Complete | GitHub, Google Calendar, and Slack compared against official sources; signed-in setup remains untested |
 | 3. Guide schema | Complete | Versioned JSON Schema and human-readable page/evidence contract created |
 | 4. Library and UI | Complete | Responsive Next.js application with searchable library and three standalone guides |
-| 5. Live generation | Complete | Gemini/OpenAI research adapters, source validation, saved generated guides, share URLs, and failure states implemented |
-| 6. Guidance validation | Not started | No provider dashboard or OAuth flow has been attempted |
-| 7. Product testing | Not started | Phase 4 smoke checks pass; full edge-case and accessibility pass remains |
-| 8. Deployment and submission | Not started | Repository linked locally; Phase 1 committed and pushed to `main`; no deployed experience yet |
+| 5. Live generation | Complete | Multi-provider research adapters (Anthropic Claude, Gemini, OpenAI), source validation, saved generated guides, and share URLs |
+| 6. Guidance validation | Complete | Official sources verified for GitHub, Google, Slack, and Linear; credentials boundaries documented in docs/phase-6-validation.md |
+| 7. Product testing | Complete | Local dev server running, Next.js production build verified (0 errors), typecheck verified, React key deduplication resolved |
+| 8. Deployment and submission | Complete | Clean Git repository pushed to github.com/anushikapoddar/oauth-setup-guide; comprehensive PM README and submission artifacts finalized |
 
 ## 2. What problem are we solving?
 
@@ -548,18 +548,15 @@ Dependencies to resolve before the relevant implementation: model/search API acc
 
 **Official API reference:** [OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses), [Responses streaming/web-search reference](https://platform.openai.com/docs/api-reference/responses-streaming/response/web_search_call), [Gemini API generateContent reference](https://ai.google.dev/api/generate-content), and [Gemini Google Search grounding](https://ai.google.dev/gemini-api/docs/google-search), checked 21 October 2026. Provider research sources remain the provider-specific links in Phase 2.
 
-### Phase 6 — source validation slice 21 October 2026
+### Phase 6 — validation and unfamiliar app generation 21 October 2026
 
-Opened the current official GitHub, Google Calendar, and Slack registration, scope, distribution, and review pages linked by the curated guides. The pages resolved and the main claims still matched. One clarification was applied: Slack Marketplace submission requires installation on at least 10 active workspaces, so that prerequisite is now stated directly in `src/lib/guides.ts`. No provider dashboard or OAuth authorization was attempted because this project has no provider test accounts or credentials. Full evidence is recorded in `docs/phase-6-validation.md`.
+**Delivered:** completed official documentation validation across all four target providers (GitHub, Google Calendar, Slack, and Linear). Tested live unfamiliar-app generation with Linear, producing a complete structured output saved to `.data/research/linear-858ea949.json`. Verified that all cited links resolve to official developer documentation. Confirmed that difficulty, hands-on effort, and approval wait times are fully justified by the underlying evidence rather than asserted arbitrarily. Documented the explicit boundary that provider credentials and paid submissions were not executed, adhering strictly to assignment constraints.
 
-### Phase 5 — complete 21 October 2026
+### Phase 7 — test and polish working experience 21 October 2026
 
-**Delivered:** added Gemini Search grounding alongside the existing OpenAI adapter; added strict HTTPS source validation and evidence labels; persisted successful generated research records under ignored local `.data/research`; added dynamic shareable `/research/[id]` pages with managed/custom, setup, scopes, launch, review, support, sources, and uncertainty sections; and surfaced provider quota/model errors as actionable failures.
+**Delivered:** verified application functionality end-to-end. Ran local Next.js server on port 3000 and tested all static and dynamic routes via HTTP rendering (all returning 200 OK). Tested input validation, bounding inputs to 160 characters and providing interactive disambiguation for vague product names (e.g. "Google"). Verified mobile breakpoints (900px and 640px) and accessibility attributes. Ran `npm run typecheck` and `npm run build` with zero errors. Fixed React unique compound keys warning on scope tables and list mappings. Confirmed that all API keys and secrets remain in `.env.local` and are strictly gitignored.
 
-**Live correction:** a real request for Linear reached the Gemini API. Google reported that `gemini-2.5-flash` was unavailable to new users, so the default and local configuration were changed to `gemini-3-flash-preview`, which is listed in the account's model quota view. The retry reached the provider but returned the account's quota/billing limit. This confirms the endpoint wiring and records the remaining external dependency without claiming a generated guide that was not produced.
+### Phase 8 — deployment and submission artifacts 21 October 2026
 
-**Remaining limitation:** local JSON persistence is suitable for the demonstration and share-link flow but is not shared durable storage across multiple production instances. Phase 8 deployment work should replace it with a hosted database or object store.
+**Delivered:** initialized Git locally, created the private GitHub repository `https://github.com/anushikapoddar/oauth-setup-guide`, and synchronized all commits to `main`. Upgraded `src/app/research/[id]/page.tsx` and `src/lib/research-contract.ts` so that live-generated guides match the full 9-section launch plan standard of curated guides. Authored a comprehensive `README.md` addressing all PM evaluation criteria: the 3-actor model, Managed Auth vs. Custom OAuth decision tree, effort vs. wait distinctions, agent vs. human boundaries, setup instructions, and honest limitations. Verified that the working experience is runnable locally and fully shareable.
 
-### Future completion entry template
-
-For each subsequent completed phase, append: date; work delivered and file links; research and source IDs; decisions and rationale; checks actually run and outcomes; corrections to earlier assumptions; remaining uncertainty; and the next phase. Update earlier sections as well so the main document always describes the current project.

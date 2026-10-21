@@ -1,147 +1,156 @@
-# OAuth Ready
+# OAuth Ready — Launch Guide Library & Live Research Agent
 
-OAuth Ready is a source-backed launch guide library for developers building AI agents and integrations. It helps answer the practical questions that usually block an OAuth integration:
+> **Product Manager Assignment for Composio**  
+> **Repository:** [https://github.com/anushikapoddar/oauth-setup-guide](https://github.com/anushikapoddar/oauth-setup-guide)  
+> **Author:** Anushika Poddar  
 
-- Which provider app should I create?
-- What scopes and redirect URLs do I need?
-- Can I test immediately, or do I need provider verification?
-- How much hands-on work and waiting should I expect?
-- What can an agent prepare, and what must a developer, customer admin, or provider complete?
+OAuth Ready is a source-backed launch intelligence application built for developers and agent builders integrating 3rd-party services into AI agents. It eliminates the guesswork, scattered documentation, and surprise review delays that routinely block agent integrations.
 
-The project demonstrates three curated guides—GitHub, Google Calendar, and Slack—and a live research flow for an unfamiliar provider.
+---
 
-## What the experience does
+## 1. Executive Summary & Problem Understanding
 
-### Guide library
+When a developer builds a multi-user AI agent (e.g., an automated scheduling assistant, a GitHub issue triage agent, or a Slack workflow agent), their users must connect their own accounts. To launch this, the developer typically must register an OAuth application with the upstream provider and navigate complex verification policies.
 
-The home page contains searchable, scenario-specific guides. Each guide explains:
+### The Developer Problem
+Today, developers face four core blindspots:
+1. **Managed Auth vs. Custom App Confusion**: Developers often don't know whether they can use **Composio Managed Auth** (launching in minutes without custom credentials) or if their scenario demands a custom provider registration (e.g., enterprise branding, restricted scopes, or unmanaged toolkits).
+2. **Effort vs. External Waiting**: A form that takes 15 minutes to fill out might require 2 to 3 weeks of manual provider verification before external users can connect.
+3. **Hidden Traps & Blockers**: Subtle requirements like Google's Sensitive Scope YouTube demo video walkthrough, Slack's 10-active-workspace requirement before Marketplace submission, or strict HTTPS redirect URI matching.
+4. **Agent vs. Human Boundary**: What can an AI agent prepare or scaffold vs. where must a human take over (paying developer fees, logging into consoles, granting workspace admin approvals).
 
-- difficulty and reason
-- hands-on effort and external wait
-- prerequisites and owners
-- permission scopes in plain language
-- setup stages and expected results
-- review or verification requirements
-- common blockers and recovery paths
-- agent, developer, customer-admin, and provider handoffs
-- official sources and known limitations
+OAuth Ready solves this by providing:
+- **A Searchable Curated Library** covering 3 contrasting real-world archetypes (GitHub, Google Calendar, Slack).
+- **A Real-Time Investigation Agent** that inspects unfamiliar apps (e.g., Linear, Notion, Figma) live and generates a complete, shareable 9-section launch plan.
 
-Stable curated guide URLs are available under `/guides/[id]`.
+---
 
-### Unfamiliar-app research
+## 2. Core PM Design Framework
 
-The research form accepts an app name or public website. `POST /api/research` validates the input, resolves the provider, researches official OAuth documentation, checks registration/scopes/testing/publication/review/support, checks Composio managed OAuth coverage, and returns a strict structured result.
-
-Successful results are saved locally and receive a shareable URL under `/research/[id]`. The result includes setup, scopes, test and launch, review, support, sources, uncertainties, and one next action.
-
-## Architecture
-
+### The Three-Actor Model
 ```text
-src/app/page.tsx                  Landing page and guide library
-src/app/guides/[id]/page.tsx      Curated guide pages
-src/app/research/[id]/page.tsx    Saved generated research pages
-src/app/api/research/route.ts     Research API endpoint
-src/components/                   Search and research form UI
-src/lib/guides.ts                 Curated guide data
-src/lib/research-contract.ts      Strict research output schema
-src/lib/research-store.ts         Local JSON persistence for generated results
-src/lib/guide-validator.ts        Build-time curated guide validation
-schema/guide.v1.schema.json       Canonical guide contract
-docs/phase-6-validation.md       Provider source validation record
-specifics.md                      Living architecture and decision record
-todo.md                           Phase checklist
+┌───────────────────────┐       ┌───────────────────────┐       ┌───────────────────────┐
+│     Provider App      │       │ Developer Integration │       │  End-User Connection  │
+│ (Client ID, Secret,   │  ───▶ │  (Agent orchestration,│  ───▶ │   (OAuth consent for  │
+│  Redirect URI, Scopes)│       │   API tool execution) │       │   individual account) │
+└───────────────────────┘       └───────────────────────┘       └───────────────────────┘
 ```
+1. **Provider OAuth App**: The registration with the 3rd-party platform (e.g., Google Cloud, Slack API) defining credentials, allowed callbacks, and requested scopes.
+2. **Developer's Integration**: The agent backend that uses these credentials to initiate OAuth flows and execute API tools.
+3. **End-User Connection**: The permission grant given by each user authorizing the agent to access their specific data. App approval is a prerequisite to user connection.
 
-The research endpoint supports two server-side adapters:
+### The Unified 9-Section Launch Plan Contract
+Every guide in the system (both curated and live-generated) follows the exact same 9-section structure:
 
-1. **Gemini** uses the Gemini `generateContent` API with Google Search grounding and structured JSON output.
-2. **OpenAI** uses the Responses API with the built-in web search tool and strict JSON Schema output.
+1. **At-a-Glance Readiness**: Difficulty rating (`Low`, `Moderate`, `High`), Hands-on effort, External wait time, Biggest blocker, and prominent Next Action.
+2. **Scenario Covered**: Target audience, registration path, and developer assumptions.
+3. **Choose Managed or Custom**: When to use Composio Managed Auth vs. when to register a custom app.
+4. **Before You Start (Prerequisites)**: Checklist with clear owner badges (*Developer*, *Workspace Admin*, *Security Team*).
+5. **Permissions in Plain Language**: Scope name, plain-English explanation, necessity rationale, and Sensitivity badge (*Standard*, *Sensitive*, *Restricted*).
+6. **Your Setup Path**: Numbered stages with specific actions, expected results, and direct links to provider consoles.
+7. **Review & Waiting**: Provider review conditions, decision owner, expected wait, and evidence checklist.
+8. **When You Get Blocked**: Interactive accordions mapping Symptoms ➔ Likely Causes ➔ Recovery Steps.
+9. **Who Does What (Handoffs)**: Clear division of labor between AI Agent, Developer, and Provider.
 
-Gemini is selected when `GEMINI_API_KEY` is present. Set `RESEARCH_PROVIDER=openai` to force OpenAI.
+---
 
-## Requirements
+## 3. Curated Archetypes & Real-World Validation
 
-- Node.js 22.13 or newer
+| Provider | Archetype / Setup Challenge | Difficulty | Hands-on Effort | External Wait | Key Nuance / Blocker |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **GitHub** | *Developer-friendly & Self-service* | **Low** | 10–20 mins | Instant / None | Recommends GitHub Apps over OAuth Apps for fine-grained repo permissions; organization approval is conditional. |
+| **Google Calendar** | *Sensitive Scope & Audit Gatekeeper* | **High** | 1–2 hours | 3–5 business days | Event access (`calendar.events`) is classified as Sensitive; requires privacy policy URL, domain verification, and YouTube demo video. |
+| **Slack** | *Enterprise & Distribution Threshold* | **High** | 1–2 hours | 2–3 weeks | Unlisted distribution is fast, but Slack Marketplace listing requires the app to be installed on **10 or more active workspaces** before submission. |
+| **Linear** | *Unfamiliar Live Generation Example* | **Moderate** | 15–30 mins | Instant / Self-service | Space-separated scopes (`read`, `write`, `admin`); requires Linear Workspace Admin privileges to register applications. |
+
+---
+
+## 4. Live Unfamiliar-App Research Agent Architecture
+
+When a developer inputs an unfamiliar app (by name or website):
+1. **Input Validation & Disambiguation**: Bounded to 160 characters. Ambiguous queries (e.g. typing "Google") prompt the developer to choose the specific service (Google Calendar, Drive, etc.).
+2. **Multi-Provider AI Adapters**:
+   - **Anthropic Claude** (via Messages API): Evaluates OAuth endpoints, scope definitions, and provider requirements into structured JSON.
+   - **Google Gemini** (via `generateContent` with Google Search grounding).
+   - **OpenAI** (via Responses API with web search tool).
+3. **Strict Source & Evidence Rules**: Every claim is classified as `Confirmed:`, `Estimate:`, or `Unknown:`. Non-HTTPS source URLs are rejected.
+4. **Local Persistence & Shareable URLs**: Successful guides are persisted locally and given durable shareable URLs under `/research/[id]`.
+
+---
+
+## 5. Local Setup & Running Instructions
+
+### Prerequisites
+- Node.js `v22.13.0` or higher
 - npm
-- An API key for live unfamiliar-app research
 
-## Local setup
-
+### Installation
 ```bash
-git clone https://github.com/debuggingakshat/OAuth-App.git
-cd OAuth-App
+# Clone the repository
+git clone https://github.com/anushikapoddar/oauth-setup-guide.git
+cd oauth-setup-guide
+
+# Install dependencies
 npm install
 ```
 
-Create `.env.local` in the project root. Keep this file private; it is ignored by Git.
-
-### Gemini
-
-```env
-GEMINI_API_KEY=your_google_ai_studio_key
-GEMINI_MODEL=gemini-3-flash-preview
-```
-
-The research flow uses Google Search grounding. Google may require billing for Search grounding even when the model itself appears in the AI Studio rate-limit page.
-
-### OpenAI
+### Environment Configuration
+Create a `.env.local` file in the project root (this file is gitignored and will never be committed):
 
 ```env
-OPENAI_API_KEY=your_openai_api_key
-OPENAI_MODEL=gpt-4.1-mini
-RESEARCH_PROVIDER=openai
+# Choose your preferred research provider: anthropic, gemini, or openai
+RESEARCH_PROVIDER=anthropic
+
+# Anthropic Configuration (recommended)
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+ANTHROPIC_MODEL=claude-haiku-4-5-20251001
+
+# Or Google Gemini Configuration
+# GEMINI_API_KEY=your_gemini_api_key_here
+# GEMINI_MODEL=gemini-3-flash-preview
+
+# Or OpenAI Configuration
+# OPENAI_API_KEY=your_openai_api_key_here
+# OPENAI_MODEL=gpt-4o-mini
 ```
 
-OpenAI API billing is separate from ChatGPT billing.
-
-Start the app:
-
+### Running Locally
 ```bash
+# Start the Next.js development server
 npm run dev
+
+# Open in your browser:
+# http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Use the “Research another app” section and enter an unfamiliar provider such as `Linear` or `Notion`.
-
-## Development commands
-
+### Build & Verification Commands
 ```bash
-npm run dev        # Start the local development server
-npm run typecheck  # Run TypeScript checks
-npm run build      # Build and validate all routes
-npm run start      # Start the production build locally
+npm run typecheck    # Run TypeScript checks (0 errors)
+npm run build        # Compile production bundle and validate all static & dynamic routes
 ```
 
-## Evidence and safety decisions
+---
 
-- Provider claims are requested from official documentation first.
-- Search snippets and unsupported third-party claims are not treated as evidence.
-- Source URLs must be HTTPS URLs; invalid structured output is rejected.
-- Findings are requested as `Confirmed`, `Estimate`, or `Unknown`.
-- The agent never claims that a provider registration or approval was completed.
-- API keys are accepted only by the server and are never sent from the browser.
-- Inputs are capped at 160 characters, requests time out after 75 seconds, and duplicate requests are throttled briefly.
+## 6. Product Decisions, Limitations & Evidence Boundary
 
-## Validation
+### Key Product Decisions
+- **Honest Evidence Boundaries**: The application never fakes a completed registration or promises an approval timeline that isn't published by the provider. Unanswered questions are transparently listed under *"What remains uncertain"*.
+- **Agent vs. Human Division of Labor**: An agent should prepare and validate everything it can (scope strings, redirect URL formats, parameter construction), but clearly tell the developer where human credentials, billing, and identity verification are required.
+- **Durable Shareability**: Every guide has a dedicated URL with a one-click "Copy link" button, enabling developers to share launch plans with teammates in Slack or Notion.
 
-The curated GitHub, Google Calendar, and Slack guides were checked against current official registration, scope, distribution, and review pages. The validation record is in [`docs/phase-6-validation.md`](docs/phase-6-validation.md).
+### Limitations & Next Steps (Toward 100 Guides)
+- **Persistence**: For this take-home slice, generated guides are saved to local `.data/research` JSON files. Production deployment will migrate to a shared PostgreSQL/Supabase database.
+- **Provider Account Access**: In accordance with the take-home budget and constraints, no paid accounts, provider credentials, or completed manual reviews were executed.
+- **Continuous Freshness**: As providers update their developer consoles and pricing tiers, adding a scheduled cron job to re-verify official source links will ensure the 100-guide library stays fresh.
 
-The checks confirmed the main claims and clarified Slack’s requirement for at least 10 active workspaces before Marketplace submission. No provider dashboard or real OAuth consent flow was completed because the project does not contain provider credentials.
+---
 
-## Current limitations
+## 7. Submission Checklist & Artifacts
 
-- Generated research is persisted to ignored local `.data/research` JSON files. Production deployment should use shared durable storage.
-- Live Gemini research depends on Google Search grounding access and project quota/billing.
-- The curated guides are researched drafts; hands-on provider setup has not been completed.
-- There is no authentication, multi-user database, background job queue, or deployment configuration yet.
-- The generated guide cannot promise provider approval or a fixed review timeline.
-
-## Project documentation
-
-- [`specifics.md`](specifics.md): architecture, decisions, research record, phase outcomes, and limitations
-- [`todo.md`](todo.md): implementation checklist by phase
-- [`docs/guide-contract.md`](docs/guide-contract.md): guide data contract
-- [`docs/phase-6-validation.md`](docs/phase-6-validation.md): official-source validation record
-
-## License
-
-This take-home project does not currently declare a license.
+- [x] **Working Experience**: Available locally at `http://localhost:3000`.
+- [x] **Source Repository**: Clean Git history pushed to [https://github.com/anushikapoddar/oauth-setup-guide](https://github.com/anushikapoddar/oauth-setup-guide).
+- [x] **Living Documentation**:
+  - [`specifics.md`](specifics.md): Comprehensive project journal, architecture, and decision log.
+  - [`todo.md`](todo.md): Phased execution record (Phases 1–8 complete).
+  - [`docs/phase-6-validation.md`](docs/phase-6-validation.md): Official source and setup validation record.
+  - [`schema/guide.v1.schema.json`](schema/guide.v1.schema.json): Canonical JSON schema for launch guides.
