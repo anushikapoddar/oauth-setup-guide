@@ -1,7 +1,8 @@
 # OAuth App Guide — Project Specifics
 
 **Last updated:** 21 October 2026 (Asia/Kolkata)  
-**Current milestone:** Phase 8 complete; full 9-section launch plan architecture, multi-provider AI adapters (Anthropic Claude, Google Gemini, OpenAI), and submission documentation finalized.  
+**Current milestone:** Phase 8 complete; full 9-section launch plan architecture, multi-provider AI adapters, Vercel cloud deployment, and custom domain configuration finalized.  
+**Live deployment:** https://oauth.anushika.space (Vercel fallback: https://oauth-setup-guide.vercel.app)  
 **Repository:** https://github.com/anushikapoddar/oauth-setup-guide  
 **Local workspace:** `/Users/anushikapoddar/Desktop/OAuth-App-main`  
 
@@ -30,7 +31,7 @@ Use these terms consistently: **researched** means a source was read; **observed
 | 5. Live generation | Complete | Multi-provider research adapters (Anthropic Claude, Gemini, OpenAI), source validation, saved generated guides, and share URLs |
 | 6. Guidance validation | Complete | Official sources verified for GitHub, Google, Slack, and Linear; credentials boundaries documented in docs/phase-6-validation.md |
 | 7. Product testing | Complete | Local dev server running, Next.js production build verified (0 errors), typecheck verified, React key deduplication resolved |
-| 8. Deployment and submission | Complete | Clean Git repository pushed to github.com/anushikapoddar/oauth-setup-guide; comprehensive PM README and submission artifacts finalized |
+| 8. Deployment and submission | Complete | Clean Git repository pushed to github.com/anushikapoddar/oauth-setup-guide; live custom domain at https://oauth.anushika.space; PM README and submission artifacts finalized |
 
 ## 2. What problem are we solving?
 
@@ -577,5 +578,13 @@ Dependencies to resolve before the relevant implementation: model/search API acc
 **Limitations:** no Discord application, Linear OAuth app, or Notion public integration was registered by this project. All guide content is based on official documentation review. Exact Composio managed scope sets for these three providers remain unverified.
 
 **UI Alignment:** updated the unfamiliar app live-research placeholder from Linear to Figma (`e.g. Figma or figma.com`) to prevent confusion now that Linear is part of the curated library, and registered Discord, Linear, and Notion in the form's client-side known provider resolution table.
+
+### Cloud deployment and custom domain configuration
+
+**Delivered:** deployed the OAuth Ready application to Vercel production with a custom domain at `https://oauth.anushika.space` (fallback: `https://oauth-setup-guide.vercel.app`).
+- Configured Vercel serverless environment variables (`RESEARCH_PROVIDER`, `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`).
+- Added serverless storage resilience in `src/lib/research-store.ts` and `src/components/research-guide-view.tsx` with dual-layer client persistence (`sessionStorage` + `localStorage`) and navigation payload encoding to bypass serverless container filesystem isolation.
+- Connected Namecheap Advanced DNS with a CNAME record pointing `oauth` to `cname.vercel-dns.com`.
+- Verified live end-to-end research generation for unfamiliar providers (Figma tested and verified live on production).
 
 

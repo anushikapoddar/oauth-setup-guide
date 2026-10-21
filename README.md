@@ -1,6 +1,7 @@
 # OAuth Ready — Launch Guide Library & Live Research Agent
 
 > **Product Manager Assignment for Composio**  
+> **Live Application:** [https://oauth.anushika.space](https://oauth.anushika.space)  
 > **Repository:** [https://github.com/anushikapoddar/oauth-setup-guide](https://github.com/anushikapoddar/oauth-setup-guide)  
 > **Author:** Anushika Poddar  
 
@@ -149,7 +150,8 @@ npm run build        # Compile production bundle and validate all static & dynam
 
 ## 7. Submission Checklist & Artifacts
 
-- [x] **Working Experience**: Available locally at `http://localhost:3000`.
+- [x] **Live Application**: Deployed on Vercel with custom domain at [https://oauth.anushika.space](https://oauth.anushika.space) (fallback: [https://oauth-setup-guide.vercel.app](https://oauth-setup-guide.vercel.app)).
+- [x] **Local Execution**: Runs cleanly via `npm run dev` at `http://localhost:3000`.
 - [x] **Source Repository**: Clean Git history pushed to [https://github.com/anushikapoddar/oauth-setup-guide](https://github.com/anushikapoddar/oauth-setup-guide).
 - [x] **Living Documentation**:
   - [`specifics.md`](specifics.md): Comprehensive project journal, architecture, and decision log.

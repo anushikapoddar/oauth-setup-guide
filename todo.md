@@ -2,7 +2,7 @@
 
 This is the working plan for the APM Integrations take-home assignment. Check an item with `[x]` only when it is done and verified. Check **Phase complete** after every required item in that phase is complete. Before completing any phase, update [specifics.md](specifics.md) with its research, decisions, architecture changes, checks, limitations, and completion journal. That file is the living project reference; the final README will summarize it for reviewers.
 
-**Current status:** All Phases 1–8 completed and verified on 21 October 2026. The 6-provider curated guide library, live agent generation flow with Claude/Gemini/OpenAI fallback, JSON persistence, and shareable URLs are fully implemented and tested.
+**Current status:** All Phases 1–8 completed, verified, and deployed on 21 October 2026. The application is live at https://oauth.anushika.space with 6 curated guides, live AI research for unfamiliar providers, and full shareable launch plans.
 
 **Target:** a working, shareable experience with a small library of researched OAuth app setup guides and a live agent-generated guide for an unfamiliar app. The long-term vision is 100 guides; the take-home needs only a few varied examples. Keep the implementation focused enough to finish and verify within the 6–8 hour budget.
 
