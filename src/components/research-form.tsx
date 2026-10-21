@@ -16,6 +16,9 @@ const known = [
   { match: ["github", "github.com"], name: "GitHub", id: "github-repository-agent" },
   { match: ["google calendar", "calendar.google.com"], name: "Google Calendar", id: "google-calendar-event-reader" },
   { match: ["slack", "slack.com"], name: "Slack", id: "slack-cross-workspace-poster" },
+  { match: ["discord", "discord.com"], name: "Discord", id: "discord-bot-agent" },
+  { match: ["linear", "linear.app"], name: "Linear", id: "linear-issue-tracker-agent" },
+  { match: ["notion", "notion.so"], name: "Notion", id: "notion-workspace-agent" },
 ];
 
 export function ResearchForm() {
@@ -68,7 +71,7 @@ export function ResearchForm() {
         <form onSubmit={submit} noValidate>
           <label htmlFor="provider-input">App name or website</label>
           <div className="research-input-row">
-            <input id="provider-input" value={input} onChange={(event) => { setInput(event.target.value); setState({ kind: "idle" }); }} placeholder="e.g. Linear or linear.app" />
+            <input id="provider-input" value={input} onChange={(event) => { setInput(event.target.value); setState({ kind: "idle" }); }} placeholder="e.g. Figma or figma.com" />
             <button type="submit">Research app <span aria-hidden="true">→</span></button>
           </div>
           <p className="form-note">Use public provider information only. Never enter client secrets or access tokens.</p>
